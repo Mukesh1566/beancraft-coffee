@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shop Coffee — BeanCraft Coffee</title>
+
+    <meta name="description"
+          content="Explore BeanCraft Coffee's collection of freshly roasted specialty coffee.">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3ed;
+            color: #241b16;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(247,243,237,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e5ddd3;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #9a5b35;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #9a5b35;
+        }
+
+        .cart {
+            background: #241b16;
+            color: white;
+            padding: 10px 17px;
+            border-radius: 30px;
+        }
+
+        /* PAGE HEADER */
+
+        .page-header {
+            max-width: 1200px;
+            margin: auto;
+            padding: 90px 24px 55px;
+        }
+
+        .eyebrow {
+            color: #9a5b35;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .page-header h1 {
+            font-size: clamp(48px, 7vw, 75px);
+            line-height: 0.95;
+            letter-spacing: -4px;
+            max-width: 800px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 span {
+            color: #9a5b35;
+        }
+
+        .page-header p {
+            max-width: 600px;
+            color: #756b63;
+            font-size: 17px;
+        }
+
+        /* FILTERS */
+
+        .shop-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 24px 100px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .filter-btn {
+            border: 1px solid #d8cec3;
+            background: transparent;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #5e5148;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #241b16;
+            color: white;
+            border-color: #241b16;
+        }
+
+        /* PRODUCTS */
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid #e7ded4;
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 20px 50px rgba(50,30,15,0.1);
+        }
+
+        .product-image {
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: #fff;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .product-info {
+            padding: 23px;
+        }
+
+        .product-category {
+            color: #9a5b35;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .product-info h2 {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .description {
+            color: #756b63;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .add-cart {
+            background: #241b16;
+            color: white;
+            border: none;
+            padding: 11px 17px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .add-cart:hover {
+            background: #9a5b35;
+        }
+
+        /* FEATURE BANNER */
+
+        .feature-banner {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 24px;
+        }
+
+        .banner-inner {
+            background: #e8ddd1;
+            border-radius: 30px;
+            padding: 55px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .banner-inner h2 {
+            font-size: 38px;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .banner-inner p {
+            color: #675b52;
+            max-width: 500px;
+        }
+
+        .banner-btn {
+            background: #241b16;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 30px;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #17110e;
+            color: white;
+            padding: 50px 24px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        footer p {
+            color: #a99d94;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #d29a70;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                letter-spacing: -2px;
+            }
+
+            .banner-inner {
+                padding: 35px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <div class="nav-container">
+
+            <a href="index.html" class="logo">
+                Bean<span>Craft</span>
+            </a>
+
+            <div class="nav-links">
+
+                <a href="index.html">Home</a>
+
+                <a href="products.html">
+                    Coffee
+                </a>
+
+                <a href="index.html#story">
+                    Our Story
+                </a>
+
+                <a href="index.html#why-us">
+                    Why BeanCraft
+                </a>
+
+                <a href="#" class="cart">
+                    Cart (0)
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <span class="eyebrow">
+            The BeanCraft Collection
+        </span>
+
+        <h1>
+            Find coffee that
+            <span>fits your ritual.</span>
+        </h1>
+
+        <p>
+            Explore our collection of freshly roasted coffee,
+            from smooth everyday blends to bold and adventurous
+            single-origin beans.
+        </p>
+
+    </section>
+
+
+    <!-- SHOP -->
+
+    <section class="shop-container">
+
+        <!-- FILTERS -->
+
+        <div class="filters">
+
+            <button class="filter-btn active">
+                All Coffee
+            </button>
+
+            <button class="filter-btn">
+                Light Roast
+            </button>
+
+            <button class="filter-btn">
+                Medium Roast
+            </button>
+
+            <button class="filter-btn">
+                Dark Roast
+            </button>
+
+            <button class="filter-btn">
+                Best Sellers
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT GRID -->
+
+        <div class="products">
+
+
+            <!-- PRODUCT 1 -->
+
+            <div class="product-card">
+
+                <div
+                    class="product-image"
+                    style="background-image:url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=85');">
+
+                    <span class="badge">
+                        Best Seller
+                    </span>
+
+                </div>
+
+                <div class="product-info">
+
+                    <div class="product-category">
+                        Medium Roast
+                    </div>
+
+                    <h2>
+                        Morning Ritual
+                    </h2>
+
+                    <p class="description">
+                        Smooth caramel notes with a soft,
+                        chocolate finish.
+                    </p>
+
+                    <div class="product-details">
+
+                        <span class="price">
+                            ₹699
+                        </span>
+
+                        <button class="add-cart">
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 2 -->
+
+            <div class="product-card">
+
+                <div
+                    class="product-image"
+                    style="background-image:url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=85');">
+
+                    <span class="badge">
+                        Bold
+                    </span>
+
+                </div>
+
+                <div class="product-info">
+
+                    <div class="product-category">
+                        Dark Roast
+                    </div>
+
+                    <h2>
+                        Dark Matter
+                    </h2>
+
+                    <p class="description">
+                        Rich cocoa, roasted nuts and a
+                        deep lingering finish.
+                    </p>
+
+                    <div class="product-details">
+
+                        <span class="price">
+                            ₹749
+                        </span>
+
+                        <button class="add-cart">
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 3 -->
+
+            <div class="product-card">
+
+                <div
+                    class="product-image"
+                    style="background-image:url('https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=1000&q=85');">
+
+                    <span class="badge">
+                        New
+                    </span>
+
+                </div>
+
+                <div class="product-info">
+
+                    <div class="product-category">
+                        Light Roast
+                    </div>
+
+                    <h2>
+                        Golden Hour
+                    </h2>
+
+                    <p class="description">
+                        Bright citrus notes with hints of
+                        honey and tropical fruit.
+                    </p>
+
+                    <div class="product-details">
+
+                        <span class="price">
+                            ₹799
+                        </span>
+
+                        <button class="add-cart">
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 4 -->
+
+            <div class="product-card">
+
+                <div
+                    class="product-image"
+                    style="background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=85');">
+                </div>
+
+                <div class="product-info">
+
+                    <div class="product-category">
+                        Medium Roast
+                    </div>
+
+                    <h2>
+                        House Blend
+                    </h2>
+
+                    <p class="description">
+                        Balanced, creamy and designed for
+                        everyday drinking.
+                    </p>
+
+                    <div class="product-details">
+
+                        <span class="price">
+                            ₹649
+                        </span>
+
+                        <button class="add-cart">
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 5 -->
+
+            <div class="product-card">
+
+                <div
+                    class="product-image"
+                    style="background-image:url('https://images.unsplash.com/photo-1495774856032-8b90bbb32b32?auto=format&fit=crop&w=1000&q=85');">
+                </div>
+
+                <div class="product-info">
+
+                    <div class="product-category">
+                        Light Roast
+                    </div>
+
+                    <h2>
+                        Ethiopia Bloom
+                    </h2>
+
+                    <p class="description">
+                        Floral aromas with blueberry,
+                        citrus and a clean finish.
+                    </p>
+
+                    <div class="product-details">
+
+                        <span class="price">
+                            ₹899
+                        </span>
+
+                        <button class="add-cart">
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 6 -->
+
+            <div class="product-card">
+
+                <div
+                    class="product-image"
+                    style="background-image:url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=85');">
+                </div>
+
+                <div class="product-info">
+
+                    <div class="product-category">
+                        Dark Roast
+                    </div>
+
+                    <h2>
+                        Midnight Roast
+                    </h2>
+
+                    <p class="description">
+                        Intense espresso character with
+                        dark chocolate and caramel.
+                    </p>
+
+                    <div class="product-details">
+
+                        <span class="price">
+                            ₹779
+                        </span>
+
+                        <button class="add-cart">
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURE BANNER -->
+
+    <section class="feature-banner">
+
+        <div class="banner-inner">
+
+            <div>
+
+                <span class="eyebrow">
+                    Coffee Subscription
+                </span>
+
+                <h2>
+                    Never run out<br>
+                    of good coffee.
+                </h2>
+
+                <p>
+                    Get freshly roasted coffee delivered to your
+                    door every month. Pause or cancel anytime.
+                </p>
+
+            </div>
+
+            <a href="#" class="banner-btn">
+                Explore Subscription →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-container">
+
+            <div>
+
+                <div class="logo">
+                    Bean<span>Craft</span>
+                </div>
+
+                <p>
+                    Crafted for better mornings.
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="products.html">
+                    Coffee
+                </a>
+
+                <a href="index.html#story">
+                    About
+                </a>
+
+                <a href="#">
+                    Privacy
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+</html>
