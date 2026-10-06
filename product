@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Morning Ritual | BeanCraft Coffee</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f8f5ef;
+      color: #241b16;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVBAR */
+    nav {
+      height: 76px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 245, 239, 0.95);
+      border-bottom: 1px solid #e7dfd5;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #a45d32;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      font-size: 14px;
+      color: #5c514a;
+    }
+
+    .nav-links a:hover {
+      color: #a45d32;
+    }
+
+    .cart {
+      background: #241b16;
+      color: white;
+      padding: 11px 18px;
+      border-radius: 30px;
+      font-size: 14px;
+    }
+
+    /* PRODUCT SECTION */
+    .product-wrapper {
+      max-width: 1200px;
+      margin: 70px auto;
+      padding: 0 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .product-image {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #e8dfd4;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 620px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #241b16;
+      color: white;
+      padding: 9px 15px;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .product-info .category {
+      color: #a45d32;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .product-info h1 {
+      font-family: Georgia, serif;
+      font-size: 58px;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+    }
+
+    .rating {
+      margin-bottom: 22px;
+      color: #a45d32;
+      font-size: 15px;
+    }
+
+    .rating span {
+      color: #6b615a;
+      margin-left: 8px;
+    }
+
+    .description {
+      color: #655a53;
+      font-size: 17px;
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .option-title {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .options {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .option {
+      border: 1px solid #d6cbc0;
+      background: transparent;
+      padding: 11px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .option:hover,
+    .option.active {
+      border-color: #a45d32;
+      background: #a45d32;
+      color: white;
+    }
+
+    .quantity-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      border: 1px solid #d6cbc0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .quantity button {
+      border: none;
+      background: white;
+      font-size: 20px;
+      width: 42px;
+      height: 46px;
+      cursor: pointer;
+    }
+
+    .quantity span {
+      width: 40px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .add-cart {
+      flex: 1;
+      border: none;
+      background: #241b16;
+      color: white;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .add-cart:hover {
+      background: #a45d32;
+      transform: translateY(-2px);
+    }
+
+    .buy-now {
+      width: 100%;
+      border: 1px solid #241b16;
+      background: transparent;
+      color: #241b16;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+
+    .buy-now:hover {
+      background: #241b16;
+      color: white;
+    }
+
+    .details {
+      border-top: 1px solid #ddd2c7;
+      padding-top: 22px;
+    }
+
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      font-size: 14px;
+      color: #655a53;
+    }
+
+    .detail strong {
+      color: #241b16;
+    }
+
+    /* FEATURES */
+    .features {
+      background: #241b16;
+      color: white;
+      padding: 65px 7%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+
+    .feature h3 {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      color: #cfc4bb;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 35px 7%;
+      background: #17110e;
+      color: #aaa09a;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 850px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .product-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin: 40px auto;
+      }
+
+      .product-image img {
+        height: 450px;
+      }
+
+      .product-info h1 {
+        font-size: 44px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+
+    <a href="index.html" class="logo">
+      Bean<span>Craft</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Coffee</a>
+      <a href="index.html#story">Our Story</a>
+      <a href="index.html#why-us">Why BeanCraft</a>
+    </div>
+
+    <a href="#" class="cart">
+      Cart (0)
+    </a>
+
+  </nav>
+
+
+  <!-- PRODUCT -->
+  <main>
+
+    <section class="product-wrapper">
+
+      <!-- IMAGE -->
+      <div class="product-image">
+
+        <div class="badge">
+          BEST SELLER
+        </div>
+
+        <img
+          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=85"
+          alt="Morning Ritual Coffee"
+        >
+
+      </div>
+
+
+      <!-- PRODUCT INFO -->
+      <div class="product-info">
+
+        <div class="category">
+          Medium Roast Coffee
+        </div>
+
+        <h1>
+          Morning Ritual
+        </h1>
+
+        <div class="rating">
+          ★★★★★
+          <span>4.9 · 128 reviews</span>
+        </div>
+
+        <p class="description">
+          A smooth and balanced everyday coffee with notes of
+          caramel, toasted almonds and milk chocolate. Crafted
+          for slow mornings and productive afternoons.
+        </p>
+
+        <div class="price">
+          ₹699
+        </div>
+
+
+        <!-- SIZE -->
+        <div class="option-title">
+          CHOOSE SIZE
+        </div>
+
+        <div class="options">
+
+          <button class="option active">
+            250g
+          </button>
+
+          <button class="option">
+            500g
+          </button>
+
+          <button class="option">
+            1kg
+          </button>
+
+        </div>
+
+
+        <!-- QUANTITY + CART -->
+        <div class="quantity-row">
+
+          <div class="quantity">
+
+            <button onclick="decreaseQuantity()">
+              −
+            </button>
+
+            <span id="quantity">
+              1
+            </span>
+
+            <button onclick="increaseQuantity()">
+              +
+            </button>
+
+          </div>
+
+          <button class="add-cart" onclick="addToCart()">
+            Add to Cart
+          </button>
+
+        </div>
+
+
+        <button class="buy-now" onclick="buyNow()">
+          Buy It Now
+        </button>
+
+
+        <!-- DETAILS -->
+        <div class="details">
+
+          <div class="detail">
+            <span>Roast Level</span>
+            <strong>Medium</strong>
+          </div>
+
+          <div class="detail">
+            <span>Origin</span>
+            <strong>India & Brazil</strong>
+          </div>
+
+          <div class="detail">
+            <span>Best For</span>
+            <strong>Espresso / Filter</strong>
+          </div>
+
+          <div class="detail">
+            <span>Delivery</span>
+            <strong>Free over ₹999</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features">
+
+      <div class="feature">
+
+        <h3>Freshly Roasted</h3>
+
+        <p>
+          Roasted in small batches for maximum freshness
+          and flavor.
+        </p>
+
+      </div>
+
+
+      <div class="feature">
+
+        <h3>Ethically Sourced</h3>
+
+        <p>
+          Carefully selected beans from responsible
+          coffee-growing communities.
+        </p>
+
+      </div>
+
+
+      <div class="feature">
+
+        <h3>Delivered Fresh</h3>
+
+        <p>
+          Packed carefully and shipped directly to your door.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div>
+      © 2026 BeanCraft Coffee
+    </div>
+
+    <div>
+      Crafted for coffee people.
+    </div>
+
+  </footer>
+
+
+  <!-- BASIC INTERACTIONS -->
+  <script>
+
+    let quantity = 1;
+
+    function increaseQuantity() {
+
+      quantity++;
+
+      document.getElementById("quantity").textContent = quantity;
+
+    }
+
+
+    function decreaseQuantity() {
+
+      if (quantity > 1) {
+
+        quantity--;
+
+        document.getElementById("quantity").textContent = quantity;
+
+      }
+
+    }
+
+
+    function addToCart() {
+
+      alert("Morning Ritual has been added to your cart!");
+
+    }
+
+
+    function buyNow() {
+
+      alert("Proceeding to checkout...");
+
+    }
+
+
+    const options = document.querySelectorAll(".option");
+
+    options.forEach(function(option) {
+
+      option.addEventListener("click", function() {
+
+        options.forEach(function(item) {
+
+          item.classList.remove("active");
+
+        });
+
+        option.classList.add("active");
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
